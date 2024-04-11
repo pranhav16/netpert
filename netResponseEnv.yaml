@@ -1,0 +1,11 @@
+name: netResponseEnv
+channels:
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - numpy
+  - openpyxl
+  - pandas
+  - python
+  - scipy

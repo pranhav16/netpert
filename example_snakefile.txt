@@ -1,0 +1,139 @@
+"""
+netresponse snakefile (c) Joel Bader Lab 2023
+"""
+
+import os
+
+"""
+Everything is underneath the root directory
+"""
+toplevel = config['toplevel']
+project = config['project']
+shell(f'echo toplevel={toplevel}\nproject={project}')
+
+"""
+Underneath the named project are reads and results
+"""
+
+dummy = os.path.join(toplevel, 'dummy.txt')
+
+rule all:
+    input:
+        dummy
+
+rule all_old:
+    input:
+        design_raw,
+        design,
+        mergedreads,
+        zamfile,
+        abcount,
+        proteinstats,
+        pairstats,
+        volcano
+
+rule parse_design:
+    """
+    Parse the sequence design
+    """
+    input:
+        design_raw = design_raw
+    output:
+        design = design
+    shell:
+        """
+        /usr/bin/env python {progname} --parse_design --design_raw {input.design_raw} --design {output.design}
+        """
+"""
+Maximum overlap is TF1 + BC + T + UMI + LIGATION + UMI + A + BC + TF2
+                    20 + 11 + 1 +  8  +    8     +  8  + 1 + 11 +  20
+                     88
+Set to 90 because why not - actually had to set higher, not sure why
+"""
+rule merge_reads:
+    input:
+        R1 = R1,
+        R2 = R2
+    output:
+        mergedreads = mergedreads
+    shell:
+        """
+        {flash} {input.R1} {input.R2} -m 50 -M 150 --allow-outies -d {resultsdir} -o {sample}
+        """
+rule zammit:
+    input:
+        mergedreads = mergedreads,
+        design = design
+    output:
+        zamfile = zamfile
+    shell:
+        """
+        /usr/bin/env python {progname} --zammit --mergedreads {input.mergedreads} --design {input.design} --zamfile {output.zamfile}
+        """
+    
+rule count_ab:
+    input:
+        design = design,
+        zamfile = zamfile
+    output:
+        abcount = abcount
+    shell:
+        """
+        /usr/bin/env python {progname} --count_ab --design {input.design} --zamfile {input.zamfile} --abcount {output.abcount}
+        """
+
+rule get_stats:
+    input:
+        abcount = abcount
+    output:
+        proteinstats = proteinstats,
+        pairstats = pairstats
+    shell:
+        """
+        /usr/bin/env python {progname} --get_stats --abcount {input.abcount} --proteinstats {output.proteinstats} --pairstats {output.pairstats}
+        """
+
+rule make_volcano:
+    input:
+        pairstats = pairstats
+    output:
+        volcano = volcano
+    shell:
+        """
+        /usr/bin/env python {progname} --make_volcano --pairstats {input.pairstats} --volcano {output.volcano}
+        """
+    
+rule dummy:
+    input:
+        zamfile
+    output:
+        dummyfile
+    shell:
+        """
+        echo 'dummy rule'
+        """
+    
+rule build_refdb:
+    """
+    Build the reference database
+    """
+    input:
+    output:
+        refdb = refdb
+    shell:
+        """
+        /usr/bin/env python {progname} --build_refdb --refdb {output.refdb}
+        """
+        
+rule build_btindex:
+    """
+    Build the bowtie indices
+    """
+    input:
+        refdb = refdb
+    output:
+    shell:
+        """
+        /usr/bin/env python {progname} --build_btindex \
+        --refdb {input.refdb}
+        """
