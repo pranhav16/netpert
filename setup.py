@@ -23,7 +23,7 @@ setup(
     },
     packages=find_packages(),
     package_data={
-        'netpert': ['databases/*.rpt', 'databases/*.tsv','databases/*.gz', 'databases/*.xlsx', 'databases/*.txt' , 'projects/*','bin/*'], # Include all .txt files in the 'data' directory
+        'netpert': ['databases/*.rpt', 'databases/*.tsv','databases/*.dat', 'databases/*.xlsx', 'databases/*.txt' ,'databases/*','projects/*','bin/*'], # Include all .txt files in the 'data' directory
     },
     entry_points={
         'console_scripts': [
