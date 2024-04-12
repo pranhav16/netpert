@@ -30,6 +30,6 @@ setup(
             'netpert = netpert.bin.netResponse:main',
         ],
     },
-    install_requires=['pandas','numpy','scipy','logging'],
+    install_requires=['pandas','numpy','scipy'],
     
 )
