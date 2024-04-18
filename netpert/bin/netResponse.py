@@ -20,9 +20,20 @@ logging.basicConfig(format='%(name)s %(levelname)s: %(message)s')
 logger = logging.getLogger('NetResponse')
 logger.setLevel(logging.INFO)
 
+current_path = os.path.abspath(__file__)
+
+# Navigate to the parent directory (netpert/bin to netpert)
+netpert_path = os.path.dirname(os.path.dirname(current_path))
+
+# Combine with 'databases' to get the path to the databases directory
+databases_path = os.path.join(netpert_path, 'databases')
+projects_path = os.path.join(netpert_path, 'projects')
+
 TOPLEVEL = '.'
-DBDIR = os.path.join(TOPLEVEL, 'databases')
-PROJDIR = os.path.join(TOPLEVEL, 'projects')
+# DBDIR = os.path.join(TOPLEVEL, 'databases')
+DBDIR = databases_path
+# PROJDIR = os.path.join(TOPLEVEL, 'projects')
+PROJDIR = projects_path
 
 class CMDParser():
     #Command line parser
