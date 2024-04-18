@@ -3,7 +3,8 @@
 # Create conda environment
 # conda env create -f bin/netResponseEnv.yaml
 
-cd ./databases
+cd ../databases
+
 curl -O http://iid.ophid.utoronto.ca/static/download/mouse_annotated_PPIs.txt.gz ; gunzip mouse_annotated_PPIs.txt.gz
 curl -O http://iid.ophid.utoronto.ca/static/download/human_annotated_PPIs.txt.gz ; gunzip human_annotated_PPIs.txt.gz
 curl -O https://www.grnpedia.org/trrust/data/trrust_rawdata.human.tsv
