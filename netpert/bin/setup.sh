@@ -15,7 +15,9 @@ curl -O https://www.informatics.jax.org/downloads/reports/MRK_List2.rpt
 curl -O https://s3.amazonaws.com/data.clue.io/repurposing/downloads/repurposing_drugs_20200324.txt
 curl -OL https://github.com/EwaldLab/2019_Prkd1/raw/master/Georgess_Prkd1_2019_Data_Final.xlsx
 curl -O https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3941052/bin/supp_jcb.201306088_JCB_201306088_TableS1.xlsx
-cd ..
+
+
+#cd ..
 
 #activate conda environment
 # source activate netResponseEnv
