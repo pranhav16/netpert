@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Create conda environment
-conda env create -f bin/netResponseEnv.yaml
+# conda env create -f bin/netResponseEnv.yaml
 
 cd ./databases
 curl -O http://iid.ophid.utoronto.ca/static/download/mouse_annotated_PPIs.txt.gz ; gunzip mouse_annotated_PPIs.txt.gz
@@ -17,7 +17,7 @@ curl -O https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3941052/bin/supp_jcb.201306
 cd ..
 
 #activate conda environment
-source activate netResponseEnv
+# source activate netResponseEnv
 
 #create Twist1 biological knowledge
 #python ./bin/createTwist1BiologicalKnowledge.py
